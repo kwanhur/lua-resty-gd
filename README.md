@@ -48,8 +48,8 @@ Create a new gd object.
 
 [Back to TOC](#table-of-contents)
 
-version
---
+Version
+=======
 
 Version numbers are in the format "X.Y.Z.W", where X.Y.Z indicates the libgd version and W the binding version.
 
