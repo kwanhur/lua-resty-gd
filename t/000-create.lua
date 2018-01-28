@@ -202,4 +202,35 @@ describe("create", function()
 --        local gdImage, err = gd.createFromXpm(image_dir .. "/not_found.xpm")
 --        assert.is_true(gdImage == nil)
 --    end)
+
+    it("createFromWebp", function()
+        local gdImage, err = gd.createFromWebp(image_dir .. "/4917851556.webp")
+        assert.is_true(gdImage ~= nil and type(gdImage) == 'table')
+        assert.is_true(gdImage.im ~= nil and type(gdImage.im) == 'cdata')
+
+        local gdImage, err = gd.createFromWebp(image_dir .. "/not_found.webp")
+        assert.is_true(gdImage == nil)
+    end)
+
+    it("createFromWebpStr",function()
+        local f = io.open(image_dir .. "/4917851556.webp")
+        local blob = f:read("*a")
+        f:close()
+
+        local gdImage, err = gd.createFromWebpStr(blob)
+        assert.is_true(gdImage ~= nil and type(gdImage) == 'table')
+        assert.is_true(gdImage.im ~= nil and type(gdImage.im) == 'cdata')
+
+        blob = nil
+        local gdImage, err = gd.createFromWebpStr(blob)
+        assert.is_true(gdImage == nil)
+
+        blob = ''
+        local gdImage, err = gd.createFromWebpStr(blob)
+        assert.is_true(gdImage == nil)
+
+        blob = 'kwa'
+        local gdImage, err = gd.createFromWebpStr(blob)
+        assert.is_true(gdImage == nil)
+    end)
 end)

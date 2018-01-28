@@ -256,10 +256,14 @@ _M.createFromXpm = function(fname)
 end
 
 _M.createFromWebp = function(fname)
-    if not fname then
-        return nil, "fname must not be empty"
+    local file, err = open(fname, "rb")
+    if not file then
+        return nil, err
     end
-    local im = libgd.gdImageCreateFromWebp(util.get_char_ptr(fname))
+    local im = libgd.gdImageCreateFromWebp(file)
+    if file then
+        file:close()
+    end
     if im == nil then
         return nil, "create failed"
     end
