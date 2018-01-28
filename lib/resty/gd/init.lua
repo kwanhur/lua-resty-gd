@@ -27,8 +27,8 @@ end
 
 _M.create = function(sx, sy)
     sx, sy = tonumber(sx), tonumber(sy)
-    if not sx or not sy or sx < 0 or sy < 0 then
-        return nil, "sx and sy must be a number not less than 0"
+    if not sx or not sy or sx <= 0 or sy <= 0 then
+        return nil, "sx and sy must be a number greater than 0"
     end
     local im = libgd.gdImageCreate(sx, sy)
     if im == nil then
@@ -41,8 +41,8 @@ _M.createPalette = _M.create
 
 _M.createTrueColor = function(sx, sy)
     sx, sy = tonumber(sx), tonumber(sy)
-    if not sx or not sy or sx < 0 or sy < 0 then
-        return nil, "sx and sy must be a number not less than 0"
+    if not sx or not sy or sx <= 0 or sy <= 0 then
+        return nil, "sx and sy must be a number greater than 0"
     end
     local im = libgd.gdImageCreateTrueColor(sx, sy)
     if im == nil then
