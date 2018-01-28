@@ -2,7 +2,7 @@
 
 
 local modulename = "gdBase"
-local _M = { _VERSION = '0.0.1', _NAME = modulename }
+local _M = { _VERSION = '2.2.5.1', _NAME = modulename }
 
 local libgd = require('resty.gd.libgd')
 
