@@ -313,117 +313,54 @@ _M.png = function(im, fname)
     if not im or type(im) ~= 'cdata' then
         return false, "im must be specified as cdata<gdImagePtr>"
     end
-    local f, err = open(fname, 'wb')
-    if not f then
-        return false, err
-    end
 
-    libgd.gdImagePng(im, f)
-    if f then
-        f:close()
-    end
-    return true
+    local gd = image:new(im)
+    return gd:png(fname)
 end
 
 _M.pngEx = function(im, fname, compression_level)
     if not im or type(im) ~= 'cdata' then
         return false, "im must be specified as cdata<gdImagePtr>"
     end
-    local f, err = open(fname, 'wb')
-    if not f then
-        return false, err
-    end
 
-    local level = tonumber(compression_level)
-    if not level or level < 1 or level > 6 then
-        return false, "level must be a number between 1 and 6"
-    end
-
-    libgd.gdImagePngEx(im, f)
-    if f then
-        f:close()
-    end
-    return true
+    local gd = image:new(im)
+    return gd:pngEx(fname, compression_level)
 end
 
 _M.gif = function(im, fname)
     if not im or type(im) ~= 'cdata' then
         return false, "im must be specified as cdata<gdImagePtr>"
     end
-    local f, err = open(fname, 'wb')
-    if not f then
-        return false, err
-    end
 
-    libgd.gdImageGif(im, f)
-    if f then
-        f:close()
-    end
-    return true
+    local gd = image:new(im)
+    return gd:gif(fname)
 end
 
 _M.gd = function(im, fname)
     if not im or type(im) ~= 'cdata' then
         return false, "im must be specified as cdata<gdImagePtr>"
     end
-    local f, err = open(fname, 'wb')
-    if not f then
-        return false, err
-    end
 
-    libgd.gdImageGd(im, f)
-    if f then
-        f:close()
-    end
-    return true
+    local gd = image:new(im)
+    return gd:gd(fname)
 end
 
 _M.gd2 = function(im, fname, chunk_size, format)
     if not im or type(im) ~= 'cdata' then
         return false, "im must be specified as cdata<gdImagePtr>"
     end
-    local f, err = open(fname, 'wb')
-    if not f then
-        return false, err
-    end
 
-    chunk_size = tonumber(chunk_size)
-    if not chunk_size or chunk_size < 0 then
-        return false, "chunk size must be a number greater than 0"
-    end
-
-    format = tonumber(format)
-    if not format or format ~= base.GD2_FMT_RAW or format ~= base.GD2_FMT_COMPRESSED then
-        return false, "format must be gd.GD2_FMT_RAW or gd.GD2_FMT_COMPRESSED"
-    end
-
-    libgd.gdImageGd2(im, f, chunk_size, format)
-    if f then
-        f:close()
-    end
-    return true
+    local gd = image:new(im)
+    return gd:gd2(fname, chunk_size, format)
 end
 
 _M.wbmp = function(im, foreground, fname)
     if not im or type(im) ~= 'cdata' then
         return false, "im must be specified as cdata<gdImagePtr>"
     end
-    local f, err = open(fname, 'wb')
-    if not f then
-        return false, err
-    end
 
-    foreground = tonumber(foreground)
-    if not foreground then
-        return false, "foreground must be a number"
-    end
-
-
-    libgd.gdImageWBMP(im, foreground, f)
-    if f then
-        f:close()
-    end
-    return true
+    local gd = image:new(im)
+    return gd:wbmp(foreground, fname)
 end
 
 _M.copy = function(dst, src, dx, dy, sx, sy, w, h)
