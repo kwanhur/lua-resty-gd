@@ -233,6 +233,9 @@ gdImagePtr gdImageCreateFromXpm (char *filename);
 gdImagePtr gdImageCreateFromWebp (FILE * inFile);
 gdImagePtr gdImageCreateFromWebpPtr (int size, void *data);
 
+gdImagePtr gdImageCreateFromTiff(FILE *inFile);
+gdImagePtr gdImageCreateFromTiffPtr(int size, void *data);
+
 void gdImageJpeg (gdImagePtr im, FILE * out, int quality);
 void * gdImageJpegPtr (gdImagePtr im, int *size, int quality);
 

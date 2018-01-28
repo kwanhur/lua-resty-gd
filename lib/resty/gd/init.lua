@@ -278,6 +278,29 @@ _M.createFromWebpStr = function(blob)
     return image:new(im)
 end
 
+_M.createFromTiff = function(fname)
+    if not fname then
+        return nil, "fname must not be empty"
+    end
+    local im = libgd.gdImageCreateFromTiff(util.get_char_ptr(fname))
+    if im == nil then
+        return nil, "create failed"
+    end
+    return image:new(im)
+end
+
+_M.createFromTiffStr = function(blob)
+    if not blob or type(blob) ~= 'string' or len(blob) <= 0 then
+        return nil, "blob could not accept"
+    end
+    local data = util.get_char_ptr(blob)
+    local im = libgd.gdImageCreateFromTiffPtr(len(blob), data)
+    if im == nil then
+        return nil, "create failed"
+    end
+    return image:new(im)
+end
+
 _M.png = function(im, fname)
     if not im or type(im) ~= 'cdata' then
         return false, "im must be specified as cdata<gdImagePtr>"
