@@ -283,10 +283,14 @@ _M.createFromWebpStr = function(blob)
 end
 
 _M.createFromTiff = function(fname)
-    if not fname then
-        return nil, "fname must not be empty"
+    local file, err = open(fname, "rb")
+    if not file then
+        return nil, err
     end
-    local im = libgd.gdImageCreateFromTiff(util.get_char_ptr(fname))
+    local im = libgd.gdImageCreateFromTiff(file)
+    if file then
+        file:close()
+    end
     if im == nil then
         return nil, "create failed"
     end

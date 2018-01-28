@@ -233,4 +233,35 @@ describe("create", function()
         local gdImage, err = gd.createFromWebpStr(blob)
         assert.is_true(gdImage == nil)
     end)
+
+    it("createFromTiff", function()
+        local gdImage, err = gd.createFromTiff(image_dir .. "/2033418828.tiff")
+        assert.is_true(gdImage ~= nil and type(gdImage) == 'table')
+        assert.is_true(gdImage.im ~= nil and type(gdImage.im) == 'cdata')
+
+        local gdImage, err = gd.createFromTiff(image_dir .. "/not_found.tiff")
+        assert.is_true(gdImage == nil)
+    end)
+
+    it("createFromTiffStr",function()
+        local f = io.open(image_dir .. "/2033418828.tiff")
+        local blob = f:read("*a")
+        f:close()
+
+        local gdImage, err = gd.createFromTiffStr(blob)
+        assert.is_true(gdImage ~= nil and type(gdImage) == 'table')
+        assert.is_true(gdImage.im ~= nil and type(gdImage.im) == 'cdata')
+
+        blob = nil
+        local gdImage, err = gd.createFromTiffStr(blob)
+        assert.is_true(gdImage == nil)
+
+        blob = ''
+        local gdImage, err = gd.createFromTiffStr(blob)
+        assert.is_true(gdImage == nil)
+
+        blob = 'kwa'
+        local gdImage, err = gd.createFromTiffStr(blob)
+        assert.is_true(gdImage == nil)
+    end)
 end)
