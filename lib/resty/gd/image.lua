@@ -291,6 +291,24 @@ _M.webpExStr = function(self, quantization)
     return tostring(blob)
 end
 
+_M.tiff = function(self, fname)
+    local f, err = open(fname, 'wb')
+    if not f then
+        return false, err
+    end
+
+    libgd.gdImageTiff(self.im, f)
+    if f then
+        f:close()
+    end
+    return true
+end
+
+_M.tiffStr = function(self)
+    local blob = libgd.gdImageTiffPtr(self.im, util.get_int_ptr_0())
+    return tostring(blob)
+end
+
 _M.colorAllocate = function(self, red, green, black)
     red, green, black = tonumber(red), tonumber(green), tonumber(black)
     if not red or not green or not black then
