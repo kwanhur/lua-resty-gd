@@ -823,7 +823,7 @@ _M.setStyle = function(self, styles)
     end
 
     local slist = util.get_style_list(styles)
-    libgd.gdImageSetStyle(im, slist, #styles)
+    libgd.gdImageSetStyle(self.im, slist, #styles)
     return true
 end
 
@@ -982,7 +982,7 @@ _M.stringFT = function(self, foreground, font, size, ang, x, y, str)
 
     local brect = util.get_int_ptr_list(8)
     if libgd.gdImageStringFT(self.im, brect, foreground, font, size, ang, x, y, str) == nil then
-        return brect[0], brect[1], brect[2], brect[3], brect[4], brect[5], brect[6], brect[7]
+        return brect[1], brect[2], brect[3], brect[4], brect[5], brect[6], brect[7], brect[8]
     end
     return nil
 end
@@ -1018,13 +1018,13 @@ _M.stringFTEx = function(self, foreground, font, size, ang, x, y, str, extr)
     local brect = util.get_int_ptr_list(8)
     if libgd.gdImageStringFTEx(self.im, brect, foreground, font, size, ang, x, y, str, ex) == nil then
         if bit_band(ex.flags, base.gdFTEX_XSHOW) then
-            return brect[0], brect[1], brect[2], brect[3], brect[4], brect[5], brect[6], brect[7], ex.xshow
+            return brect[1], brect[2], brect[3], brect[4], brect[5], brect[6], brect[7], brect[8], ex.xshow
         end
 
         if bit_band(ex.flags, base.gdFTEX_RETURNFONTPATHNAME) then
-            return brect[0], brect[1], brect[2], brect[3], brect[4], brect[5], brect[6], brect[7], ex.xshow, ex.fontpath
+            return brect[1], brect[2], brect[3], brect[4], brect[5], brect[6], brect[7], brect[8], ex.xshow, ex.fontpath
         end
-        return brect[0], brect[1], brect[2], brect[3], brect[4], brect[5], brect[6], brect[7]
+        return brect[1], brect[2], brect[3], brect[4], brect[5], brect[6], brect[7], brect[8]
     end
     return nil
 end
