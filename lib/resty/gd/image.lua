@@ -227,7 +227,6 @@ _M.wbmp = function(self, foreground, fname)
         return false, "foreground must be a number"
     end
 
-
     libgd.gdImageWBMP(self.im, foreground, f)
     if f then
         f:close()
@@ -242,6 +241,53 @@ _M.wbmpStr = function(self, foreground)
     end
 
     local blob = libgd.gdImageWBMPPtr(self.im, util.get_int_ptr_0(), foreground)
+    return tostring(blob)
+end
+
+
+_M.webp = function(self, fname)
+    local f, err = open(fname, 'wb')
+    if not f then
+        return false, err
+    end
+
+    libgd.gdImageWebp(self.im, f)
+    if f then
+        f:close()
+    end
+    return true
+end
+
+_M.webpStr = function(self)
+    local blob = libgd.gdImageWebpPtr(self.im, util.get_int_ptr_0())
+    return tostring(blob)
+end
+
+_M.webpEx = function(self, quantization, fname)
+    local f, err = open(fname, 'wb')
+    if not f then
+        return false, err
+    end
+
+    quantization = tonumber(quantization)
+    if not quantization then
+        return false, "quantization must be a number"
+    end
+
+    libgd.gdImageWebpEx(self.im, f, quantization)
+    if f then
+        f:close()
+    end
+    return true
+end
+
+_M.webpExStr = function(self, quantization)
+    quantization = tonumber(quantization)
+    if not quantization then
+        return nil, "quantization must be a number"
+    end
+
+    local blob = libgd.gdImageWebpPtrEx(self.im, util.get_int_ptr_0(), quantization)
     return tostring(blob)
 end
 
