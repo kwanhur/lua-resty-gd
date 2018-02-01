@@ -72,13 +72,13 @@ _M.trueColorToPalette = function(self, dither, colors)
 end
 
 _M.jpeg = function(self, fname, quality)
-    local f, err = open(fname, 'wb')
-    if not f then
-        return false, err
-    end
     quality = tonumber(quality)
     if not quality or quality < 0 or quality > 100 then
         return false, "quality must be a number between 0 and 100"
+    end
+    local f, err = open(fname, 'wb')
+    if not f then
+        return false, err
     end
 
     libgd.gdImageJpeg(self.im, f, quality)
@@ -117,14 +117,13 @@ _M.pngStr = function(self)
 end
 
 _M.pngEx = function(self, fname, compression_level)
-    local f, err = open(fname, 'wb')
-    if not f then
-        return false, err
-    end
-
     local level = tonumber(compression_level)
     if not level or level < 1 or level > 6 then
         return false, "level must be a number between 1 and 6"
+    end
+    local f, err = open(fname, 'wb')
+    if not f then
+        return false, err
     end
 
     libgd.gdImagePngEx(self.im, f)
@@ -181,11 +180,6 @@ _M.gdStr = function(self)
 end
 
 _M.gd2 = function(self, fname, chunk_size, format)
-    local f, err = open(fname, 'wb')
-    if not f then
-        return false, err
-    end
-
     chunk_size = tonumber(chunk_size)
     if not chunk_size or chunk_size < 0 then
         return false, "chunk size must be a number greater than 0"
@@ -194,6 +188,10 @@ _M.gd2 = function(self, fname, chunk_size, format)
     format = tonumber(format)
     if not format or format ~= base.GD2_FMT_RAW or format ~= base.GD2_FMT_COMPRESSED then
         return false, "format must be gd.GD2_FMT_RAW or gd.GD2_FMT_COMPRESSED"
+    end
+    local f, err = open(fname, 'wb')
+    if not f then
+        return false, err
     end
 
     libgd.gdImageGd2(self.im, f, chunk_size, format)
