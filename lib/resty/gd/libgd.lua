@@ -13,6 +13,7 @@ struct _IO_FILE;
 typedef struct _IO_FILE FILE;
 
 static const unsigned int gdMaxColors = 256;
+const char * gdVersionString(void);
 
 typedef enum {
 	GD_DEFAULT          = 0,
@@ -380,12 +381,14 @@ void* gdImageGifAnimEndPtr(int *size);
 local get_flags
 get_flags = function()
     local proc = io.popen("pkg-config --cflags --libs gdlib", "r")
-    local flags = proc:read("*a")
-    get_flags = function()
+    if proc then
+        local flags = proc:read("*a")
+        get_flags = function()
+            return flags
+        end
+        proc:close()
         return flags
     end
-    proc:close()
-    return flags
 end
 
 local try_to_load
@@ -419,8 +422,12 @@ try_to_load = function(...)
     return error("Failed to load gd (" .. tostring(...) .. ")")
 end
 
-local lib = try_to_load("gd", function()
-    local lname = get_flags():match("-l(gd[^%s]*)")
+local lib = try_to_load(function()
+    local flags = get_flags()
+    local lname = 'gd'
+    if flags then
+        lname = get_flags():match("-l(gd[^%s]*)")
+    end
     local suffix
     if ffi.os == "OSX" then
         suffix = ".dylib"

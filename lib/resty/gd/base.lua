@@ -4,9 +4,13 @@
 local modulename = "gdBase"
 local _M = { _VERSION = '2.2.5.1', _NAME = modulename }
 
+local ffi = require('ffi')
 local libgd = require('resty.gd.libgd')
 
 local tonumber = tonumber
+local ffi_str = ffi.string
+
+_M.gdVersion = ffi_str(libgd.gdVersionString())
 
 _M.gdMaxColors = tonumber(libgd.gdMaxColors)
 

@@ -736,6 +736,8 @@ end
 
 _M.VERSION = base._VERSION
 
+_M.GD_VERSION = base.gdVersion
+
 _M.MAX_COLORS = base.gdMaxColors
 
 _M.GD2_FMT_RAW = base.GD2_FMT_RAW
