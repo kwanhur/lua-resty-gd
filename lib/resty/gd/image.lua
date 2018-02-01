@@ -91,7 +91,7 @@ end
 _M.jpegStr = function(self, quality)
     quality = tonumber(quality)
     if not quality or quality < 0 or quality > 100 then
-        return false, "quality must be a number between 0 and 100"
+        return nil, "quality must be a number between 0 and 100"
     end
 
     local blob = libgd.gdImageJpegPtr(self.im, util.get_int_ptr_0(), quality)
@@ -204,12 +204,12 @@ end
 _M.gd2Str = function(self, chunk_size, format)
     chunk_size = tonumber(chunk_size)
     if not chunk_size or chunk_size < 0 then
-        return false, "chunk size must be a number greater than 0"
+        return nil, "chunk size must be a number greater than 0"
     end
 
     format = tonumber(format)
     if not format or format ~= base.GD2_FMT_RAW or format ~= base.GD2_FMT_COMPRESSED then
-        return false, "format must be gd.GD2_FMT_RAW or gd.GD2_FMT_COMPRESSED"
+        return nil, "format must be gd.GD2_FMT_RAW or gd.GD2_FMT_COMPRESSED"
     end
 
     local blob = libgd.gdImageGd2Ptr(self.im, util.get_int_ptr_0())
@@ -238,7 +238,7 @@ end
 _M.wbmpStr = function(self, foreground)
     foreground = tonumber(foreground)
     if not foreground then
-        return false, "foreground must be a number"
+        return nil, "foreground must be a number"
     end
 
     local blob = libgd.gdImageWBMPPtr(self.im, util.get_int_ptr_0(), foreground)
@@ -511,11 +511,11 @@ _M.setPixel = function(self, x, y, color)
 end
 
 _M.sizeX = function(self)
-    return tonumber(libgd.gdImageSX(self.im))
+    return tonumber(self.im.sx)
 end
 
 _M.sizeY = function(self)
-    return tonumber(libgd.gdImageSY(self.im))
+    return tonumber(self.im.sy)
 end
 
 _M.sizeXY = function(self)
