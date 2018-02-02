@@ -51,4 +51,14 @@ describe("jpeg", function()
         assert.is_true(x == x1)
         assert.is_true(y == y1)
     end)
+
+    it("colorsTotal", function()
+        local gdImage, err = gd.createFromJpeg(image_dir .. "/t.jpg")
+        assert.is_true(gdImage ~= nil)
+
+        local fname = image_dir .. "/t_img.jpg"
+        local ok, err = gdImage:jpeg(fname, 100)
+        assert.is_true(ok)
+        assert.is_true(gdImage:colorsTotal() ~= nil)
+    end)
 end)

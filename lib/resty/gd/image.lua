@@ -479,7 +479,7 @@ _M.colorResolveAlpha = function(self, red, green, black, alpha)
 end
 
 _M.colorsTotal = function(self)
-    return libgd.gdImageColorsTotal(self.im)
+    return tonumber(self.im.colorsTotal)
 end
 
 _M.red = function(self, color)
